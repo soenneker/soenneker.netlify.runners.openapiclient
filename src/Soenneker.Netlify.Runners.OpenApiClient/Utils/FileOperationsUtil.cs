@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Soenneker.Extensions.ValueTask;
 using Soenneker.Kiota.Util.Abstract;
+using Soenneker.OpenApi.Fixer.Abstract;
 using Soenneker.Utils.Directory.Abstract;
 using Soenneker.Utils.File.Abstract;
 using Soenneker.Utils.File.Download.Abstract;
@@ -30,6 +31,7 @@ public sealed class FileOperationsUtil : IFileOperationsUtil
     private readonly IGitUtil _gitUtil;
     private readonly IDotnetUtil _dotnetUtil;
     private readonly IKiotaUtil _kiotaUtil;
+    private readonly IOpenApiFixer _openApiFixer;
     private readonly IYamlUtil _yamlUtil;
     private readonly IOpenApiConverter _converter;
     private readonly IFileDownloadUtil _fileDownloadUtil;
@@ -38,13 +40,14 @@ public sealed class FileOperationsUtil : IFileOperationsUtil
 
     public FileOperationsUtil(ILogger<FileOperationsUtil> logger, IConfiguration configuration, IGitUtil gitUtil, IDotnetUtil dotnetUtil,
         IFileDownloadUtil fileDownloadUtil, IFileUtil fileUtil, IDirectoryUtil directoryUtil, IKiotaUtil kiotaUtil, IYamlUtil yamlUtil,
-        IOpenApiConverter converter)
+        IOpenApiConverter converter, IOpenApiFixer openApiFixer)
     {
         _logger = logger;
         _configuration = configuration;
         _gitUtil = gitUtil;
         _dotnetUtil = dotnetUtil;
         _kiotaUtil = kiotaUtil;
+        _openApiFixer = openApiFixer;
         _yamlUtil = yamlUtil;
         _converter = converter;
         _fileDownloadUtil = fileDownloadUtil;
@@ -72,7 +75,11 @@ public sealed class FileOperationsUtil : IFileOperationsUtil
 
         string openApi3Path = Path.Combine(gitDirectory, "openapi3.json");
 
+        string fixedFilePath = Path.Combine(gitDirectory, "fixed.json");
+
         await _converter.ConvertFile(openApi2Path, openApi3Path, cancellationToken);
+        await _openApiFixer.Fix(openApi3Path, fixedFilePath, cancellationToken);
+
 
         await _kiotaUtil.EnsureInstalled(cancellationToken);
 
@@ -80,7 +87,7 @@ public sealed class FileOperationsUtil : IFileOperationsUtil
 
         await DeleteAllExceptCsproj(srcDirectory, cancellationToken);
 
-        await _kiotaUtil.Generate(openApi3Path, "NetlifyOpenApiClient", Constants.Library, gitDirectory, cancellationToken)
+        await _kiotaUtil.Generate(fixedFilePath, "NetlifyOpenApiClient", Constants.Library, gitDirectory, cancellationToken)
                         .NoSync();
 
         await BuildAndPush(gitDirectory, cancellationToken)

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Soenneker.Kiota.Util.Registrars;
 using Soenneker.Managers.Runners.Registrars;
+using Soenneker.OpenApi.Fixer.Registrars;
 using Soenneker.Netlify.Runners.OpenApiClient.Utils;
 using Soenneker.Netlify.Runners.OpenApiClient.Utils.Abstract;
 using Soenneker.OpenApi.Converter.Registrars;
@@ -25,6 +26,7 @@ public static class Startup
         services.AddHostedService<ConsoleHostedService>()
                 .AddSingleton<IFileOperationsUtil, FileOperationsUtil>()
                 .AddRunnersManagerAsSingleton()
+                .AddOpenApiFixerAsSingleton()
                 .AddFileDownloadUtilAsSingleton()
                 .AddKiotaUtilAsSingleton()
                 .AddYamlUtilAsSingleton()
