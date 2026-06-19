@@ -28,7 +28,7 @@
         <PackageReference Include="Soenneker.Managers.Runners" Version="4.0.2194" />
         <PackageReference Include="Soenneker.OpenApi.Fixer" Version="4.0.264" />
         <PackageReference Include="Soenneker.OpenApi.Converter" Version="4.0.30" />
-        <PackageReference Include="Soenneker.Utils.File.Download" Version="4.0.1622" />
+        <PackageReference Include="Soenneker.Utils.File.Download" Version="4.0.1628" />
         <PackageReference Include="Soenneker.Utils.Yaml" Version="4.0.87" />
     </ItemGroup>
 </Project>
