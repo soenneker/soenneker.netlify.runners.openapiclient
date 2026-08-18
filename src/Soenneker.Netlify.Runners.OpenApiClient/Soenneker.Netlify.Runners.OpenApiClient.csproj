@@ -29,6 +29,6 @@
         <PackageReference Include="Soenneker.OpenApi.Fixer" Version="4.0.303" />
         <PackageReference Include="Soenneker.OpenApi.Converter" Version="4.0.53" />
         <PackageReference Include="Soenneker.Utils.File.Download" Version="4.0.1685" />
-        <PackageReference Include="Soenneker.Utils.Yaml" Version="4.0.128" />
+        <PackageReference Include="Soenneker.Utils.Yaml" Version="4.0.130" />
     </ItemGroup>
 </Project>
