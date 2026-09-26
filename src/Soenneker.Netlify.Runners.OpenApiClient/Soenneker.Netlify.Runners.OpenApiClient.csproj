@@ -29,7 +29,7 @@
         <PackageReference Include="Soenneker.OpenApi.Fixer" Version="4.0.370" />
         <PackageReference Include="Soenneker.OpenApi.Converter" Version="4.0.99" />
         <PackageReference Include="Soenneker.Utils.File.Download" Version="4.0.1783" />
-        <PackageReference Include="Soenneker.Utils.Yaml" Version="4.0.199" />
+        <PackageReference Include="Soenneker.Utils.Yaml" Version="4.0.202" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Soenneker.Enums.DeployEnvironment" Version="4.0.244" />
